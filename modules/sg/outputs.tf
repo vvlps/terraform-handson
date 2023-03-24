@@ -1,7 +1,7 @@
 output "security_group_id" {
-    value = [ for sg in aws_security_group.alb-sg : sg.id]
+    value = {for k, v in aws_security_group.alb-sg : k => v.id}
 }
 
 output "security_group_arn" {
-    value = [ for sg in aws_security_group.alb-sg : sg.arn]
+    value = {for k, v in aws_security_group.alb-sg : k => v.arn}
 }

@@ -5,12 +5,6 @@ security_groups = {
     description = "SG para ALB"
 
     ingress = {
-      https = {
-        description = "ingress ALB https"
-        from_port   = 443
-        to_port     = 443
-        protocol    = "tcp"
-      }
       http = {
         description = "ingress ALB http"
         from_port   = 80
@@ -19,38 +13,33 @@ security_groups = {
       }
     }
     egress = {
-      https = {
-        description = "egress ALB https"
-        from_port   = 443
-        to_port     = 443
-        protocol    = "tcp"
-      }
-      http = {
-        description = "egress ALB http"
-        from_port   = 80
-        to_port     = 80
-        protocol    = "tcp"
+      all = {
+        description = "egress ALB all"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
       }
     }
   }
-  ec2-sg = {
-    description = "SG para EC2"
+}
 
-    ingress = {
-      http = {
-        description = "ingress ALB https"
-        from_port   = 80
-        to_port     = 80
-        protocol    = "tcp"
-      }
-    }
-    egress = {
-      https = {
-        description = "egress ALB https"
-        from_port   = 443
-        to_port     = 443
-        protocol    = "tcp"
-      }
-    }
+iam_policies = {
+  ecs-task-policy = {
+    document = "iam-documents/policy/ecs-task-policy.json"
+    path     = "/"
+  }
+  ecs-execution-policy = {
+    document = "iam-documents/policy/ecs-execution-policy.json"
+    path     = "/"
+  }
+}
+iam_roles = {
+  ecs-task-role = {
+    trust_policy_document = "iam-documents/trust/ecs-trust.json"
+    attached_policies     = ["arn:aws:iam::ACCOUNT_ID:policy/ecs-task-policy"]
+  }
+  ecs-execution-role = {
+    trust_policy_document = "iam-documents/trust/ecs-trust.json"
+    attached_policies     = ["arn:aws:iam::ACCOUNT_ID:policy/ecs-execution-policy"]
   }
 }

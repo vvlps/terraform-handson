@@ -1,0 +1,20 @@
+[
+   {
+      "image":"${image}",
+      "name":"nginx-container",
+      "portMappings":[
+         {
+            "hostPort":80,
+            "containerPort":80,
+            "protocol":"tcp"
+         }
+      ],
+      "networkMode":"awsvpc",
+      "environment":[
+         {
+            "name":"ENV",
+            "value":"${env}"
+         }
+      ]
+   }
+]
